@@ -10,7 +10,7 @@ import java.util.List;
 public interface PlanoRepository extends JpaRepository<Plano, Long> {
 
     List<Plano> findByNome(String nome);
-    List<Plano> fyndByValor(float valor);
+    List<Plano> findByValor(Float valor);
     List<Plano> findByValidade(Date validade);
     List<Plano> findByUsuario(Usuario usuario);
 }

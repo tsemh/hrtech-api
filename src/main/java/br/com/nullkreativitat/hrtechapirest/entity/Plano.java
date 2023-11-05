@@ -24,7 +24,7 @@ public class Plano {
     @Column(name="nm_plano")
     private String nome;
     @Column(name="vl_plano")
-    private float valor;
+    private Float valor;
     @Column(name="dt_validade_plano")
     private Date validade;
     @ManyToOne
