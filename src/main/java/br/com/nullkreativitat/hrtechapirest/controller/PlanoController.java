@@ -5,6 +5,8 @@ import br.com.nullkreativitat.hrtechapirest.entity.Usuario;
 import br.com.nullkreativitat.hrtechapirest.repository.PlanoRepository;
 import br.com.nullkreativitat.hrtechapirest.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,90 +20,100 @@ public class PlanoController {
 
     @Autowired
     private PlanoRepository planoRepository;
+
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    @PostMapping("/cadastrar")
-    public Plano postarPlano(@RequestBody Plano plano, @RequestParam long idUsuario) {
+    @PostMapping("/postar")
+    public ResponseEntity<Plano> postarPlano(@RequestBody Plano plano, @RequestParam long idUsuario) {
         Optional<Usuario> usuarioOptional = usuarioRepository.findById(idUsuario);
-        if(usuarioOptional.isPresent()) {
+        if (usuarioOptional.isPresent()) {
             Usuario usuario = usuarioOptional.get();
             plano.setUsuario(usuario);
-            return planoRepository.save(plano);
+            Plano novoPlano = planoRepository.save(plano);
+            return ResponseEntity.status(HttpStatus.CREATED).body(novoPlano);
         } else {
-            throw new RuntimeException("Usuário não encontrado com o ID "+idUsuario);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
-    @GetMapping("/obter-lista")
-    public List<Plano> obterTodosPlanos() {
-        return planoRepository.findAll();
+
+    @GetMapping("/lista")
+    public ResponseEntity<List<Plano>> obterTodosPlanos() {
+        List<Plano> planos = planoRepository.findAll();
+        return ResponseEntity.ok(planos);
     }
-    @GetMapping("/obter-pelo-id/{id}")
-    public Plano obterPlanoPeloId(@PathVariable long id) {
-        return planoRepository.findById(id).get();
-    }
-    @GetMapping("/obter-pelo-nome")
-    public List<Plano> obterPeloNome(@RequestParam String nome) {
-        if(nome == null) {
-            throw new RuntimeException("Nome"+nome+"não foi encontrado");
+
+    @GetMapping("/pelo-id/{id}")
+    public ResponseEntity<Plano> obterPlanoPeloId(@PathVariable long id) {
+        Optional<Plano> planoOptional = planoRepository.findById(id);
+        if (planoOptional.isPresent()) {
+            return ResponseEntity.ok(planoOptional.get());
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-        return planoRepository.findByNome(nome);
     }
-    @GetMapping("/obter-pelo-valor")
-    public List<Plano> obterPelovalor(@RequestParam Float valor) {
-        if(valor == null) {
-            throw new RuntimeException("Valor"+valor+"não foi encontrado");
+
+    @GetMapping("/pelo-nome")
+    public ResponseEntity<List<Plano>> obterPeloNome(@RequestParam String nome) {
+        if (nome == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
-        return planoRepository.findByValor(valor);
+        List<Plano> planos = planoRepository.findByNome(nome);
+        return ResponseEntity.ok(planos);
     }
-    @GetMapping("/obter-pela-validade")
-    public List<Plano> obterPelaValidade(@RequestParam Date validade) {
-        if(validade == null) {
-            throw new RuntimeException("Validade"+validade+"não foi encontrada");
+
+    @GetMapping("/pelo-valor")
+    public ResponseEntity<List<Plano>> obterPeloValor(@RequestParam Float valor) {
+        if (valor == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
-        return planoRepository.findByValidade(validade);
+        List<Plano> planos = planoRepository.findByValor(valor);
+        return ResponseEntity.ok(planos);
     }
-    @GetMapping("/obter-pelo-usuario")
-    public List<Plano> obterPeloUsuario(@RequestParam Usuario usuario) {
-        if(usuario == null) {
-            throw new RuntimeException("Usuário"+usuario+"não foi encontrado");
+
+    @GetMapping("/pela-validade")
+    public ResponseEntity<List<Plano>> obterPelaValidade(@RequestParam Date validade) {
+        if (validade == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
-        return planoRepository.findByUsuario(usuario);
+        List<Plano> planos = planoRepository.findByValidade(validade);
+        return ResponseEntity.ok(planos);
     }
+
+    @GetMapping("/pelo-usuario")
+    public ResponseEntity<List<Plano>> obterPeloUsuario(@RequestParam Long usuarioId) {
+        if (usuarioId == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+        Optional<Usuario> usuarioOptional = usuarioRepository.findById(usuarioId);
+        if (usuarioOptional.isPresent()) {
+            Usuario usuario = usuarioOptional.get();
+            List<Plano> planos = planoRepository.findByUsuario(usuario);
+            return ResponseEntity.ok(planos);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
     @PutMapping("/editar/{id}")
-    public Plano editarPlano(@RequestBody Plano plano, @PathVariable Long id) {
-        plano.setId(id);
-        return planoRepository.save(plano);
+    public ResponseEntity<Plano> editarPlano(@RequestBody Plano plano, @PathVariable Long id) {
+        Optional<Plano> existingPlano = planoRepository.findById(id);
+        if (existingPlano.isPresent()) {
+            plano.setId(id);
+            Plano planoAtualizado = planoRepository.save(plano);
+            return ResponseEntity.ok(planoAtualizado);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
     }
+
     @DeleteMapping("deletar/{id}")
-    public void deletarPlano(@PathVariable Long id) {
-        planoRepository.deleteById(id);
+    public ResponseEntity<Void> deletarPlano(@PathVariable Long id) {
+        if (planoRepository.existsById(id)) {
+            planoRepository.deleteById(id);
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
