@@ -27,4 +27,15 @@ public class Noticia {
     @JoinColumn(name="id_usuario")
     @JsonBackReference(value="noticias")
     private Usuario usuario;
+
+    public Noticia() {
+    }
+
+    public Noticia(Long id, String nome, String descricao, Date date, Usuario usuario) {
+        this.id = id;
+        this.nome = nome;
+        this.descricao = descricao;
+        this.date = date;
+        this.usuario = usuario;
+    }
 }

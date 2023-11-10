@@ -25,4 +25,13 @@ public class Pontos {
     @JoinColumn(name="id_usuario")
     @JsonBackReference(value="pontos")
     private Usuario usuario;
+
+    public Pontos() {
+    }
+    public Pontos(Long id, String pontp, LocalDateTime data, Usuario usuario) {
+        this.id = id;
+        this.pontp = pontp;
+        this.data = data;
+        this.usuario = usuario;
+    }
 }

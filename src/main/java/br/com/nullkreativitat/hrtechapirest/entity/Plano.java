@@ -18,7 +18,6 @@ public class Plano {
     @SequenceGenerator(name="plano", sequenceName="sq_tb_plano", allocationSize=1)
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="plano")
     private Long id;
-
     @Column(name="ds_plano")
     private String descricao;
     @Column(name="nm_plano")
@@ -31,4 +30,16 @@ public class Plano {
     @JoinColumn(name="id_usuario")
     @JsonBackReference(value="planos")
     private Usuario usuario;
+
+    public Plano() {
+    }
+
+    public Plano(Long id, String descricao, String nome, Float valor, Date validade, Usuario usuario) {
+        this.id = id;
+        this.descricao = descricao;
+        this.nome = nome;
+        this.valor = valor;
+        this.validade = validade;
+        this.usuario = usuario;
+    }
 }

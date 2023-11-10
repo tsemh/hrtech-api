@@ -23,4 +23,14 @@ public class Reajuste {
     @JoinColumn(name="id_usuario")
     @JsonBackReference(value="reajustes")
     private Usuario usuario;
+
+    public Reajuste() {
+    }
+
+    public Reajuste(Long id, String nome, Float reajuste, Usuario usuario) {
+        this.id = id;
+        this.nome = nome;
+        this.reajuste = reajuste;
+        this.usuario = usuario;
+    }
 }

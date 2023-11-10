@@ -20,4 +20,13 @@ public class Holerite {
     private Date date;
     @Column(name="vl_holerite")
     private Float valor;
+
+    public Holerite() {
+    }
+
+    public Holerite(Long id, Date date, Float valor) {
+        this.id = id;
+        this.date = date;
+        this.valor = valor;
+    }
 }
