@@ -17,7 +17,7 @@ public class Plano {
     @Column(name="id_plano")
     @SequenceGenerator(name="plano", sequenceName="sq_tb_plano", allocationSize=1)
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="plano")
-    private long id;
+    private Long id;
 
     @Column(name="ds_plano")
     private String descricao;
