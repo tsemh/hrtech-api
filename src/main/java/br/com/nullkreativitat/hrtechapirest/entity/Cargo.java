@@ -13,7 +13,7 @@ public class Cargo {
     @Column(name="id_cargo")
     @SequenceGenerator(name="cargo", sequenceName="sq_tb_cargo", allocationSize=1)
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="cargo")
-    private long id;
+    private Long id;
     @Column(name="nm_cargo")
     private String nome;
     @Column(name="nv_cargo")
