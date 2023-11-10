@@ -1,2 +1,4 @@
-package br.com.nullkreativitat.hrtechapirest.config;public class SecurityConfig {
+package br.com.nullkreativitat.hrtechapirest.config;
+
+public class SecurityConfig {
 }
