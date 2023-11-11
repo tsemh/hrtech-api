@@ -1,5 +1,6 @@
 package br.com.nullkreativitat.hrtechapirest.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,16 +18,20 @@ public class Holerite {
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="holerite")
     private Long id;
     @Column(name="dt_holerite")
-    private Date date;
+    private Date data;
     @Column(name="vl_holerite")
     private Float valor;
+    @ManyToOne
+    @JoinColumn(name="id_usuario")
+    @JsonBackReference(value="holerites")
+    private Usuario usuario;
 
     public Holerite() {
     }
 
-    public Holerite(Long id, Date date, Float valor) {
+    public Holerite(Long id, Date data, Float valor) {
         this.id = id;
-        this.date = date;
+        this.data = data;
         this.valor = valor;
     }
 }
