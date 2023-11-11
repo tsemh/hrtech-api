@@ -33,7 +33,6 @@ public class Plano {
 
     public Plano() {
     }
-
     public Plano(Long id, String descricao, String nome, Float valor, Date validade, Usuario usuario) {
         this.id = id;
         this.descricao = descricao;
