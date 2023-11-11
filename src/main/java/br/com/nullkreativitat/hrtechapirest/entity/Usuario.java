@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -25,7 +28,20 @@ public class Usuario {
     @JoinColumn(name="id_cargo")
     @JsonBackReference("cargos")
     private Cargo cargo;
-
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Candidato candidato;
+    @OneToMany(cascade=CascadeType.ALL, mappedBy="id_usuario", fetch=FetchType.LAZY)
+    private List<FeedBack> feedbacks = new ArrayList<>();
+    @OneToMany(cascade=CascadeType.ALL, mappedBy="id_usuario", fetch=FetchType.LAZY)
+    private List<Holerite> holerites = new ArrayList<>();
+    @OneToMany(cascade=CascadeType.ALL, mappedBy="id_usuario", fetch=FetchType.LAZY)
+    private List<Plano> planos = new ArrayList<>();
+    @OneToMany(cascade=CascadeType.ALL, mappedBy="id_usuario", fetch=FetchType.LAZY)
+    private List<Pontos> pontos = new ArrayList<>();
+    @OneToMany(cascade=CascadeType.ALL, mappedBy="id_usuario", fetch=FetchType.LAZY)
+    private List<ProcessoSeletivo> processosSeletivos = new ArrayList<>();
+    @OneToMany(cascade=CascadeType.ALL, mappedBy="id_usuario", fetch=FetchType.LAZY)
+    private List<Vale> vales = new ArrayList<>();
     public Usuario() {
     }
 

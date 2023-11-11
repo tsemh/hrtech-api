@@ -38,7 +38,7 @@ public class NotaCriterioController {
         NotaCriterio savedNotaCriterio = notaCriterioRepository.save(notaCriterio);
         return new ResponseEntity<>(savedNotaCriterio, HttpStatus.CREATED);
     }
-    
+
     @GetMapping("/byProcessoSeletivo/{processoSeletivoId}")
     public List<NotaCriterio> getNotasCriteriosByProcessoSeletivo(@PathVariable Long processoSeletivoId) {
         return notaCriterioRepository.findByProcessoSeletivo_Id(processoSeletivoId);

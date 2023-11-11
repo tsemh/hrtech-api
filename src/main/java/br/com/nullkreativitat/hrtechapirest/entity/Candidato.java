@@ -5,7 +5,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -31,11 +33,14 @@ public class Candidato {
     @JoinColumn(name="id_feedback")
     @JsonBackReference(value="candidatos")
     private FeedBack feedBack;
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="id_usuario")
     @JsonBackReference(value="candidatos")
     private Usuario usuario;
-
+    @OneToMany(cascade=CascadeType.ALL, mappedBy="id_candidato", fetch=FetchType.LAZY)
+    private List<Candidato> candidato = new ArrayList<>();
+    @OneToMany(cascade=CascadeType.ALL, mappedBy="id_candidato", fetch=FetchType.LAZY)
+    private List<NotaCriterio> notascriterios = new ArrayList<>();
     public Candidato() {
     }
 

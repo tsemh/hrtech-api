@@ -5,7 +5,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -29,6 +31,8 @@ public class FeedBack {
     @JoinColumn(name="id_usuario")
     @JsonBackReference(value="feedback")
     private Usuario usuario;
+    @OneToMany(cascade=CascadeType.ALL, mappedBy="id_feedback", fetch=FetchType.LAZY)
+    private List<Candidato> candidatos = new ArrayList<>();
 
     public FeedBack() {
     }

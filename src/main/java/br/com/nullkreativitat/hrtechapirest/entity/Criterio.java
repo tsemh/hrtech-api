@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -23,6 +26,8 @@ public class Criterio {
     @JoinColumn(name="id_processoSeletivo")
     @JsonBackReference(value="criterios")
     private ProcessoSeletivo processoSeletivo;
+    @OneToMany(cascade=CascadeType.ALL, mappedBy="id_criterio", fetch=FetchType.LAZY)
+    private List<NotaCriterio> notasCriterios= new ArrayList<>();
 
     public Criterio() {
     }

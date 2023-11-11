@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -18,7 +21,10 @@ public class Cargo {
     private String nome;
     @Column(name="nv_cargo")
     private Integer nivel;
-
+    @OneToMany(cascade=CascadeType.ALL, mappedBy="id_cargo", fetch=FetchType.LAZY)
+    private List<ProcessoSeletivo> processosSeletivos = new ArrayList<>();
+    @OneToMany(cascade=CascadeType.ALL, mappedBy="id_cargo", fetch=FetchType.LAZY)
+    private List<Usuario> usuarios = new ArrayList<>();
     public Cargo() {
     }
 

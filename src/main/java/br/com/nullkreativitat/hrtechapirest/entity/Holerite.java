@@ -5,7 +5,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -25,7 +27,8 @@ public class Holerite {
     @JoinColumn(name="id_usuario")
     @JsonBackReference(value="holerites")
     private Usuario usuario;
-
+    @OneToMany(cascade=CascadeType.ALL, mappedBy="id_holerite", fetch=FetchType.LAZY)
+    private List<Reajuste> reajustes = new ArrayList<>();
     public Holerite() {
     }
 

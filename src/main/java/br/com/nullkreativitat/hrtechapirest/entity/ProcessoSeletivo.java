@@ -5,7 +5,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -33,7 +35,12 @@ public class ProcessoSeletivo {
     @JoinColumn(name="id_cargo")
     @JsonBackReference(value="processos_seletivos")
     private Cargo cargo;
-
+    @OneToMany(cascade=CascadeType.ALL, mappedBy="id_processoSeletivo", fetch=FetchType.LAZY)
+    private List<CandidatoProcesso> candidatosProcesso = new ArrayList<>();
+    @OneToMany(cascade=CascadeType.ALL, mappedBy="id_processoSeletivo", fetch=FetchType.LAZY)
+    private List<Criterio> criterios = new ArrayList<>();
+    @OneToMany(cascade=CascadeType.ALL, mappedBy="id_processoSeletivo", fetch=FetchType.LAZY)
+    private List<NotaCriterio> notasCriterios = new ArrayList<>();
     public ProcessoSeletivo() {
     }
 
