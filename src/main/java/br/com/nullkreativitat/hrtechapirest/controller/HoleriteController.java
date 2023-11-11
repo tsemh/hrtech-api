@@ -23,33 +23,33 @@ public class HoleriteController {
     private UsuarioRepository usuarioRepository;
 
     @PostMapping("/post")
-    public Holerite createHolerite(@RequestBody Holerite holerite) {
+    public Holerite postarHolerite(@RequestBody Holerite holerite) {
         return holeriteRepository.save(holerite);
     }
     @GetMapping("/lista")
-    public List<Holerite> getAllHolerites() {
+    public List<Holerite> obterTodosHolerites() {
         return holeriteRepository.findAll();
     }
     @GetMapping("/pelo-id/{id}")
-    public ResponseEntity<Holerite> getHoleriteById(@PathVariable Long id) {
+    public ResponseEntity<Holerite> obterPeloId(@PathVariable Long id) {
         Optional<Holerite> holerite = holeriteRepository.findById(id);
         return holerite.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
     @GetMapping("/pela-data")
-    public List<Holerite> getHoleritesByDate(@RequestParam Date data) {
+    public List<Holerite> obterPelaData(@RequestParam Date data) {
         return holeriteRepository.findByData(data);
     }
     @GetMapping("/pelo-valor")
-    public List<Holerite> getHoleritesByValor(@RequestParam Float valor) {
+    public List<Holerite> obterPeloValor(@RequestParam Float valor) {
         return holeriteRepository.findByValor(valor);
     }
     @GetMapping("/pelo-usuario")
-    public List<Holerite> getHoleritesByUsuario(@RequestParam Long idUsuario) {
+    public List<Holerite> obterPeloUsuario(@RequestParam Long idUsuario) {
         Optional<Usuario> usuario = usuarioRepository.findById(idUsuario);
         return usuario.map(holeriteRepository::findByUsuario).orElse(Collections.emptyList());
     }
     @PutMapping("/editar/{id}")
-    public ResponseEntity<Holerite> updateHolerite(@PathVariable Long id, @RequestBody Holerite updatedHolerite) {
+    public ResponseEntity<Holerite> editarHolerite(@PathVariable Long id, @RequestBody Holerite updatedHolerite) {
         Optional<Holerite> existingHolerite = holeriteRepository.findById(id);
         if (existingHolerite.isPresent()) {
             Holerite holerite = existingHolerite.get();
@@ -62,7 +62,7 @@ public class HoleriteController {
         }
     }
     @DeleteMapping("/deletar/{id}")
-    public ResponseEntity<Void> deleteHolerite(@PathVariable Long id) {
+    public ResponseEntity<Void> deletarHolerite(@PathVariable Long id) {
         Optional<Holerite> holerite = holeriteRepository.findById(id);
         if (holerite.isPresent()) {
             holeriteRepository.deleteById(id);

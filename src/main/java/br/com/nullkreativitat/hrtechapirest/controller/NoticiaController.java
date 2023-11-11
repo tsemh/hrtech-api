@@ -21,32 +21,32 @@ public class NoticiaController {
     @Autowired
     private UsuarioRepository usuarioRepository;
     @GetMapping("/lista")
-    public List<Noticia> listarNoticias() {
+    public List<Noticia> obterTodasNoticias() {
         return noticiaRepository.findAll();
     }
     @GetMapping("/pelo-id/{id}")
-    public ResponseEntity<Noticia> getById(@PathVariable Long id) {
+    public ResponseEntity<Noticia> obterPeloId(@PathVariable Long id) {
         Optional<Noticia> noticia = noticiaRepository.findById(id);
         return noticia.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
     @PostMapping("/postar")
-    public Noticia adicionarNoticia(@RequestBody Noticia noticia) {
+    public Noticia postarNoticia(@RequestBody Noticia noticia) {
         noticia.setDate(new Date());
         return noticiaRepository.save(noticia);
     }
 
     @GetMapping("/pelo-nome")
-    public List<Noticia> buscarPorNome(@RequestParam String nome) {
+    public List<Noticia> obterPeloNome(@RequestParam String nome) {
         return noticiaRepository.findByNome(nome);
     }
 
     @GetMapping("/pelo-usuario")
-    public List<Noticia> buscarPorUsuario(@RequestParam Long idUsuario) {
+    public List<Noticia> obterPeloUsuario(@RequestParam Long idUsuario) {
         return noticiaRepository.findByUsuario(usuarioRepository.findById(idUsuario).orElse(null));
     }
     @PutMapping("/editar/{id}")
-    public ResponseEntity<Noticia> update(@PathVariable Long id, @RequestBody Noticia novaNoticia) {
+    public ResponseEntity<Noticia> editarNoticia(@PathVariable Long id, @RequestBody Noticia novaNoticia) {
         Optional<Noticia> noticia = noticiaRepository.findById(id);
 
         if (noticia.isPresent()) {
@@ -62,7 +62,7 @@ public class NoticiaController {
         }
     }
     @DeleteMapping("/deletar/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable Long id) {
+    public ResponseEntity<Void> deletarNoticia(@PathVariable Long id) {
         if (noticiaRepository.existsById(id)) {
             noticiaRepository.deleteById(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

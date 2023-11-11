@@ -23,16 +23,16 @@ public class PontosController {
     private UsuarioRepository usuarioRepository;
 
     @PostMapping("/postar")
-    public Pontos post(@RequestBody Pontos ponto) {
+    public Pontos postarPontos(@RequestBody Pontos ponto) {
         ponto.setData(LocalDateTime.now());
         return pontosRepository.save(ponto);
     }
     @GetMapping("/lista")
-    public List<Pontos> listarPontos() {
+    public List<Pontos> obterTodosPontos() {
         return pontosRepository.findAll();
     }
     @GetMapping("/pelo-id/{id}")
-    public ResponseEntity<Pontos> getById(@PathVariable Long id) {
+    public ResponseEntity<Pontos> obterPeloId(@PathVariable Long id) {
         Optional<Pontos> ponto = pontosRepository.findById(id);
         return ponto.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));

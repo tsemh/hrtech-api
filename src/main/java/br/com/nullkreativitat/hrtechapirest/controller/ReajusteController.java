@@ -21,39 +21,36 @@ public class ReajusteController {
     private ReajusteRepository reajusteRepository;
 
     @Autowired
-    private UsuarioRepository usuarioRepository;
-
-    @Autowired
     private HoleriteRepository holeriteRepository;
 
-    @PostMapping
-    public Reajuste createReajuste(@RequestBody Reajuste reajuste) {
+    @PostMapping("/postar")
+    public Reajuste postarReajuste(@RequestBody Reajuste reajuste) {
         return reajusteRepository.save(reajuste);
     }
     @GetMapping("/lista")
-    public List<Reajuste> getAllReajustes() {
+    public List<Reajuste> obterTodosReajustes() {
         return reajusteRepository.findAll();
     }
     @GetMapping("/pelo-id/{id}")
-    public ResponseEntity<Reajuste> getReajusteById(@PathVariable Long id) {
+    public ResponseEntity<Reajuste> obterPeloId(@PathVariable Long id) {
         Optional<Reajuste> reajuste = reajusteRepository.findById(id);
         return reajuste.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
     @GetMapping("/pelo-nome")
-    public List<Reajuste> getReajustesByNome(@RequestParam String nome) {
+    public List<Reajuste> obterPeloNome(@RequestParam String nome) {
         return reajusteRepository.findByNome(nome);
     }
     @GetMapping("/pelo-valor")
-    public List<Reajuste> getReajustesByValor(@RequestParam Float valor) {
+    public List<Reajuste> obterPeloValor(@RequestParam Float valor) {
         return reajusteRepository.findByValor(valor);
     }
     @GetMapping("/pelo-holerite")
-    public List<Reajuste> getReajustesByHolerite(@RequestParam Long idHolerite) {
+    public List<Reajuste> obterPeloHolerite(@RequestParam Long idHolerite) {
         Optional<Holerite> holerite = holeriteRepository.findById(idHolerite);
         return holerite.map(reajusteRepository::findByHolerite).orElse(Collections.emptyList());
     }
     @PutMapping("/editar/{id}")
-    public ResponseEntity<Reajuste> updateReajuste(@PathVariable Long id, @RequestBody Reajuste updatedReajuste) {
+    public ResponseEntity<Reajuste> editarReajuste(@PathVariable Long id, @RequestBody Reajuste updatedReajuste) {
         Optional<Reajuste> existingReajuste = reajusteRepository.findById(id);
         if (existingReajuste.isPresent()) {
             Reajuste reajuste = existingReajuste.get();
@@ -66,7 +63,7 @@ public class ReajusteController {
         }
     }
     @DeleteMapping("/deletar/{id}")
-    public ResponseEntity<Void> deleteReajuste(@PathVariable Long id) {
+    public ResponseEntity<Void> deletarReajuste(@PathVariable Long id) {
         Optional<Reajuste> reajuste = reajusteRepository.findById(id);
         if (reajuste.isPresent()) {
             reajusteRepository.deleteById(id);
