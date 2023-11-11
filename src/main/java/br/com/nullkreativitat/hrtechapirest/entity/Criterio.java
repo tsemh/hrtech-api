@@ -20,7 +20,7 @@ public class Criterio {
     @Column(name="vl_criterio")
     private Integer valor;
     @ManyToOne
-    @JoinColumn(name="id_processo")
+    @JoinColumn(name="id_processoSeletivo")
     @JsonBackReference(value="criterios")
     private ProcessoSeletivo processoSeletivo;
 
