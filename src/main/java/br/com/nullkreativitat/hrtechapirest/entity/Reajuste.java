@@ -18,19 +18,18 @@ public class Reajuste {
     @Column(name="nm_reajuste")
     private String nome;
     @Column(name="vl_reajuste")
-    private Float reajuste;
+    private Float valor;
     @ManyToOne
-    @JoinColumn(name="id_usuario")
-    @JsonBackReference(value="reajustes")
-    private Usuario usuario;
+    @JoinColumn(name="id_holerite")
+    @JsonBackReference("reajustes")
+    private Holerite holerite;
 
     public Reajuste() {
     }
 
-    public Reajuste(Long id, String nome, Float reajuste, Usuario usuario) {
+    public Reajuste(Long id, String nome, Float valor) {
         this.id = id;
         this.nome = nome;
-        this.reajuste = reajuste;
-        this.usuario = usuario;
+        this.valor = valor;
     }
 }
