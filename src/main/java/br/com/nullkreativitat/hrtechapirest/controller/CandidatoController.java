@@ -52,7 +52,7 @@ public class CandidatoController {
     }
     @GetMapping("/pela-DataNascimento")
     public List<Candidato> obterPelaDataNascimento(@RequestParam Date dataNascimento) {
-        return candidatoRepository.findByDataCascimento(dataNascimento);
+        return candidatoRepository.findByDataNascimento(dataNascimento);
     }
     @GetMapping("/pelo-feedback")
     public List<Candidato> obterPeloFeedback(@RequestParam Long feedbackId) {

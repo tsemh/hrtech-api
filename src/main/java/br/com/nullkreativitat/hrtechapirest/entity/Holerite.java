@@ -19,15 +19,19 @@ public class Holerite {
     @SequenceGenerator(name="holerite", sequenceName="sq_tb_holerite", allocationSize=1)
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="holerite")
     private Long id;
+
     @Column(name="dt_holerite")
     private Date data;
+
     @Column(name="vl_holerite")
     private Float valor;
+
     @ManyToOne
     @JoinColumn(name="id_usuario")
-    @JsonBackReference(value="holerites")
+    @JsonBackReference(value="usuario")
     private Usuario usuario;
-    @OneToMany(cascade=CascadeType.ALL, mappedBy="id_holerite", fetch=FetchType.LAZY)
+
+    @OneToMany(cascade=CascadeType.ALL, mappedBy="holerite", fetch=FetchType.LAZY)
     private List<Reajuste> reajustes = new ArrayList<>();
     public Holerite() {
     }

@@ -60,8 +60,8 @@ public class ProcessoSeletivoController {
         return new ResponseEntity<>(processosSeletivos, HttpStatus.OK);
     }
     @GetMapping("/pelo-numeroVagas")
-    public ResponseEntity<List<PropertyEditor>> obterPeloNumeroVagas(@RequestParam Integer numeroVagas) {
-        List<PropertyEditor> processosSeletivos = processoSeletivoRepository.findByNumeroVagas(numeroVagas);
+    public ResponseEntity<List<ProcessoSeletivo>> obterPeloNumeroVagas(@RequestParam Integer numeroVagas) {
+        List<ProcessoSeletivo> processosSeletivos = processoSeletivoRepository.findByNumeroVagas(numeroVagas);
         return new ResponseEntity<>(processosSeletivos, HttpStatus.OK);
     }
     @GetMapping("/pelo-usuario")

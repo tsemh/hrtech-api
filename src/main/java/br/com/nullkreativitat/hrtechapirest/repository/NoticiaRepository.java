@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface NoticiaRepository extends JpaRepository<Noticia, Long> {
     List<Noticia> findByNome(String nome);
-    List<Noticia> findByNome(Date data);
+    List<Noticia> findByData(Date data);
     List<Noticia> findByUsuario(Usuario usuario);
 }

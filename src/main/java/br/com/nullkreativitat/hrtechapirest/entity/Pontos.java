@@ -17,13 +17,16 @@ public class Pontos {
     @SequenceGenerator(name="pontos", sequenceName="sq_tb_pontos", allocationSize=1)
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="pontos")
     private Long id;
+
     @Column(name="ds_ponto")
     private String pontp;
+
     @Column(name="dt_ponto")
     private LocalDateTime data;
+
     @ManyToOne
     @JoinColumn(name="id_usuario")
-    @JsonBackReference(value="pontos")
+    @JsonBackReference(value="usuario")
     private Usuario usuario;
 
     public Pontos() {

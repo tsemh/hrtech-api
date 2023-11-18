@@ -18,15 +18,19 @@ public class Criterio {
     @SequenceGenerator(name="criterio", sequenceName="sq_tb_criterio", allocationSize=1)
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="criterio")
     private Long id;
+
     @Column(name="nm_criterio")
     private String nome;
+
     @Column(name="vl_criterio")
     private Integer valor;
+
     @ManyToOne
     @JoinColumn(name="id_processoSeletivo")
-    @JsonBackReference(value="criterios")
+    @JsonBackReference(value="processoSeletivo")
     private ProcessoSeletivo processoSeletivo;
-    @OneToMany(cascade=CascadeType.ALL, mappedBy="id_criterio", fetch=FetchType.LAZY)
+
+    @OneToMany(cascade=CascadeType.ALL, mappedBy="criterio", fetch=FetchType.LAZY)
     private List<NotaCriterio> notasCriterios= new ArrayList<>();
 
     public Criterio() {

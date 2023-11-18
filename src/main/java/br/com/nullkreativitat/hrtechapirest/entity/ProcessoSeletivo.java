@@ -19,27 +19,36 @@ public class ProcessoSeletivo {
     @SequenceGenerator(name="processo_seletivo", sequenceName="sq_tb_processo_seletivo", allocationSize=1)
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="processo_seletivo")
     private Long id;
+
     @Column(name="nm_processo_seletivo")
     private String nome;
+
     @Column(name="dt_inicio")
     private Date dataInicio;
+
     @Column(name="dt_fim")
     private Date dataFim;
+
     @Column(name="nr_vagas")
     private Integer numeroVagas;
+
     @ManyToOne
     @JoinColumn(name="id_usuario")
-    @JsonBackReference(value="processos_seletivos")
+    @JsonBackReference(value="usuario")
     private Usuario usuario;
+
     @ManyToOne
     @JoinColumn(name="id_cargo")
-    @JsonBackReference(value="processos_seletivos")
+    @JsonBackReference(value="cargo")
     private Cargo cargo;
-    @OneToMany(cascade=CascadeType.ALL, mappedBy="id_processoSeletivo", fetch=FetchType.LAZY)
-    private List<CandidatoProcesso> candidatosProcesso = new ArrayList<>();
-    @OneToMany(cascade=CascadeType.ALL, mappedBy="id_processoSeletivo", fetch=FetchType.LAZY)
+
+    @OneToMany(cascade=CascadeType.ALL, mappedBy="processoSeletivo", fetch=FetchType.LAZY)
+    private List<CandidatoProcesso> candidatosProcessos = new ArrayList<>();
+
+    @OneToMany(cascade=CascadeType.ALL, mappedBy="processoSeletivo", fetch=FetchType.LAZY)
     private List<Criterio> criterios = new ArrayList<>();
-    @OneToMany(cascade=CascadeType.ALL, mappedBy="id_processoSeletivo", fetch=FetchType.LAZY)
+
+    @OneToMany(cascade=CascadeType.ALL, mappedBy="processoSeletivo", fetch=FetchType.LAZY)
     private List<NotaCriterio> notasCriterios = new ArrayList<>();
     public ProcessoSeletivo() {
     }

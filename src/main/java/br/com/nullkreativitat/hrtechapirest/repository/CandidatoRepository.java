@@ -13,7 +13,7 @@ public interface CandidatoRepository extends JpaRepository<Candidato, Long> {
     List<Candidato> findByEmail(String email);
     List<Candidato> findByTelefone(String telefone);
     List<Candidato> findBySexo(String sexo);
-    List<Candidato> findByDataCascimento(Date dataNascimento);
+    List<Candidato> findByDataNascimento(Date dataNascimento);
     List<Candidato> findByFeedBack(FeedBack feedBack);
     List<Candidato> findByUsuario(Usuario usuario);
 }

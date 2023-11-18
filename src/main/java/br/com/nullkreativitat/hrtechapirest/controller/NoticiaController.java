@@ -32,7 +32,7 @@ public class NoticiaController {
     }
     @PostMapping("/postar")
     public Noticia postarNoticia(@RequestBody Noticia noticia) {
-        noticia.setDate(new Date());
+        noticia.setData(new Date());
         return noticiaRepository.save(noticia);
     }
 
@@ -53,7 +53,7 @@ public class NoticiaController {
             Noticia noticiaExistente = noticia.get();
             noticiaExistente.setNome(novaNoticia.getNome());
             noticiaExistente.setDescricao(novaNoticia.getDescricao());
-            noticiaExistente.setDate(novaNoticia.getDate());
+            noticiaExistente.setData(novaNoticia.getData());
             noticiaExistente.setUsuario(novaNoticia.getUsuario());
 
             return new ResponseEntity<>(noticiaRepository.save(noticiaExistente), HttpStatus.OK);

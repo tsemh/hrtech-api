@@ -13,7 +13,7 @@ public interface ProcessoSeletivoRepository extends JpaRepository<ProcessoSeleti
     List<ProcessoSeletivo> findByNome(String nome);
     List<ProcessoSeletivo> findByDataInicio(Date dataInicio);
     List<ProcessoSeletivo> findByDataFim(Date dataFim);
-    List<PropertyEditor> findByNumeroVagas(Integer numeroVagas);
+    List<ProcessoSeletivo> findByNumeroVagas(Integer numeroVagas);
     List<ProcessoSeletivo> findByUsuario(Usuario usuario);
     List<ProcessoSeletivo> findByCargo(Cargo cargo);
 }

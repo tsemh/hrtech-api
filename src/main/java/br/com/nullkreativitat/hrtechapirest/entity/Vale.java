@@ -17,15 +17,19 @@ public class Vale {
     @SequenceGenerator(name="vale", sequenceName="sq_tb_vale", allocationSize=1)
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="vale")
     private Long id;
+
     @Column(name="nm_vale")
     private String nome;
+
     @Column(name="vl_vale")
     private Float valor;
+
     @Column(name="dt_vale")
     private Date data;
+
     @ManyToOne
     @JoinColumn(name="id_usuario")
-    @JsonBackReference(value="vales")
+    @JsonBackReference(value="usuario")
     private Usuario usuario;
 
     public Vale() {

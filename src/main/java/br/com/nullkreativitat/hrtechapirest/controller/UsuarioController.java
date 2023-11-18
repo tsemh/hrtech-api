@@ -4,6 +4,7 @@ import br.com.nullkreativitat.hrtechapirest.entity.Cargo;
 import br.com.nullkreativitat.hrtechapirest.entity.Usuario;
 import br.com.nullkreativitat.hrtechapirest.repository.CargoRepository;
 import br.com.nullkreativitat.hrtechapirest.repository.UsuarioRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,17 +22,21 @@ public class UsuarioController {
 
     @Autowired
     private CargoRepository cargoRepository;
-
     @PostMapping("/postar")
-    public ResponseEntity<Usuario> postarUsuario(@RequestBody Usuario usuario) {
-        Optional<Usuario> existingUsuario = usuarioRepository.findById(usuario.getId());
+    @Transactional
+    public Usuario postUsuario(@RequestBody Usuario usuario, @RequestParam String nomeCargo, @RequestParam Integer nivel) {
+        Cargo cargo = cargoRepository.findByNomeAndNivel(nomeCargo, nivel);
 
-        if (!existingUsuario.isPresent()) {
-            Usuario savedUsuario = usuarioRepository.save(usuario);
-            return ResponseEntity.status(HttpStatus.CREATED).body(savedUsuario);
+        if (cargo == null) {
+            cargo = new Cargo();
+            cargo.setNome(nomeCargo);
+            cargo.setNivel(nivel);
+            cargo = cargoRepository.save(cargo);
+            usuario.setCargo(cargo);
         } else {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
+            usuario.setCargo(cargo);
         }
+        return usuarioRepository.save(usuario);
     }
 
     @GetMapping("/lista")

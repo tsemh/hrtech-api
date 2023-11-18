@@ -41,7 +41,7 @@ public class FeedBackController {
     }
     @GetMapping("/pelo-nome/{nome}")
     public ResponseEntity<List<FeedBack>> obterPeloNome(@RequestParam String nome) {
-        List<FeedBack> feedbacks = feedBackRepository.findBYNome(nome);
+        List<FeedBack> feedbacks = feedBackRepository.findByNome(nome);
         return new ResponseEntity<>(feedbacks, HttpStatus.OK);
     }
 
@@ -60,7 +60,7 @@ public class FeedBackController {
         Optional<Usuario> usuario = usuarioRepository.findById(idUsuario);
 
         if (usuario.isPresent()) {
-            List<FeedBack> feedbacks = feedBackRepository.findBYUsuario(usuario.get());
+            List<FeedBack> feedbacks = feedBackRepository.findByUsuario(usuario.get());
             return new ResponseEntity<>(feedbacks, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

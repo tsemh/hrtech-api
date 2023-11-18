@@ -15,13 +15,16 @@ public class Reajuste {
     @SequenceGenerator(name="reajuste", sequenceName="sq_tb_reajuste", allocationSize=1)
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="reajuste")
     private Long id;
+
     @Column(name="nm_reajuste")
     private String nome;
+
     @Column(name="vl_reajuste")
     private Float valor;
+
     @ManyToOne
     @JoinColumn(name="id_holerite")
-    @JsonBackReference("reajustes")
+    @JsonBackReference("holerite")
     private Holerite holerite;
 
     public Reajuste() {

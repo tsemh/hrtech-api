@@ -19,20 +19,20 @@ public class NotaCriterio {
 
     @ManyToOne
     @MapsId("criterio")
-    @JoinColumn(name = "id_criterio")
-    @JsonBackReference(value = "notasCriterios")
+    @JoinColumn(name = "id_candidato")
+    @JsonBackReference(value = "criterio")
     private Criterio criterio;
 
     @ManyToOne
     @MapsId("processoSeletivo")
     @JoinColumn(name = "id_processoSeletivo")
-    @JsonBackReference(value = "notasCriterios")
+    @JsonBackReference(value = "processoSeletivo")
     private ProcessoSeletivo processoSeletivo;
 
     @ManyToOne
     @MapsId("candidatoProcesso")
     @JoinColumn(name = "id_candidato")
-    @JsonBackReference(value = "notasCriterios")
+    @JsonBackReference(value = "candidato")
     private Candidato candidato;
 
     public NotaCriterio() {

@@ -19,30 +19,37 @@ public class FeedBack {
     @SequenceGenerator(name="feedback", sequenceName="sq_tb_feedback", allocationSize=1)
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="feedback")
     private Long id;
+
     @Column(name="ds_feedback")
     private String descricao;
+
     @Column(name="nm_feedback")
-    private String nm_feedback;
+    private String nome;
+
     @Column(name="dt_feedback")
     private Date data;
+
     @Column(name="st_feedback")
     private String status;
-    @OneToOne
+
+    @ManyToOne
     @JoinColumn(name="id_usuario")
-    @JsonBackReference(value="feedback")
+    @JsonBackReference(value="usuario")
     private Usuario usuario;
-    @OneToMany(cascade=CascadeType.ALL, mappedBy="id_feedback", fetch=FetchType.LAZY)
-    private List<Candidato> candidatos = new ArrayList<>();
+
+    @OneToOne(cascade=CascadeType.ALL, mappedBy="feedBack", fetch=FetchType.LAZY)
+    private Candidato candidato;
 
     public FeedBack() {
     }
 
-    public FeedBack(Long id, String descricao, String nm_feedback, Date data, String status, Usuario usuario) {
+    public FeedBack(Long id, String descricao, String nome, Date data, String status, Usuario usuario, Candidato candidato) {
         this.id = id;
         this.descricao = descricao;
-        this.nm_feedback = nm_feedback;
+        this.nome = nome;
         this.data = data;
         this.status = status;
         this.usuario = usuario;
+        this.candidato = candidato;
     }
 }

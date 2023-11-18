@@ -8,8 +8,8 @@ import java.util.Date;
 import java.util.List;
 
 public interface FeedBackRepository extends JpaRepository<FeedBack, Long> {
-    List<FeedBack> findBYNome(String nome);
+    List<FeedBack> findByNome(String nome);
     List<FeedBack> findByData(Date data);
     List<FeedBack> findByStatus(String status);
-    List<FeedBack> findBYUsuario(Usuario usuario);
+    List<FeedBack> findByUsuario(Usuario usuario);
 }

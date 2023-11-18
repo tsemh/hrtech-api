@@ -17,13 +17,17 @@ public class Cargo {
     @SequenceGenerator(name="cargo", sequenceName="sq_tb_cargo", allocationSize=1)
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="cargo")
     private Long id;
+
     @Column(name="nm_cargo")
     private String nome;
+
     @Column(name="nv_cargo")
     private Integer nivel;
-    @OneToMany(cascade=CascadeType.ALL, mappedBy="id_cargo", fetch=FetchType.LAZY)
+
+    @OneToMany(cascade=CascadeType.ALL, mappedBy="cargo", fetch=FetchType.LAZY)
     private List<ProcessoSeletivo> processosSeletivos = new ArrayList<>();
-    @OneToMany(cascade=CascadeType.ALL, mappedBy="id_cargo", fetch=FetchType.LAZY)
+
+    @OneToMany(cascade=CascadeType.ALL, mappedBy="cargo", fetch=FetchType.LAZY)
     private List<Usuario> usuarios = new ArrayList<>();
     public Cargo() {
     }
