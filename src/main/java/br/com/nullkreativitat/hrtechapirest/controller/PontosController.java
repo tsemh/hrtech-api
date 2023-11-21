@@ -49,7 +49,7 @@ public class PontosController {
 
 @GetMapping("/pela-data-usuario")
 public ResponseEntity<Pontos> obterPelaDataEUsuario(@RequestParam("data") String dataStr, @RequestParam("usuarioId") Long usuarioId) {
-    LocalDateTime data = LocalDateTime.parse(dataStr);
+    //LocalDateTime data = LocalDateTime.parse(dataStr);
     Optional<Usuario> usuarioOptional = usuarioRepository.findById(usuarioId);
 
     if (usuarioOptional.isPresent()) {
