@@ -46,17 +46,25 @@ public class PontosController {
     public List<Pontos> obterPeloUsuario(@RequestParam Long idUsuario) {
         return pontosRepository.findByUsuario(usuarioRepository.findById(idUsuario).orElse(null));
     }
-@GetMapping("/pela-data-usuario")
-public Pontos obterPelaDataEUsuario(@RequestParam("data") String dataStr, @RequestParam("usuarioId") Long usuarioId) {
+@@GetMapping("/pela-data-usuario")
+public ResponseEntity<Pontos> obterPelaDataEUsuario(@RequestParam("data") String dataStr, @RequestParam("usuarioId") Long usuarioId) {
     LocalDateTime data = LocalDateTime.parse(dataStr);
     Optional<Usuario> usuarioOptional = usuarioRepository.findById(usuarioId);
+
     if (usuarioOptional.isPresent()) {
         Usuario usuario = usuarioOptional.get();
-        return pontosRepository.findByDataAndUsuario(data, usuario);
+        Pontos pontos = pontosRepository.findByDataAndUsuario(data, usuario);
+
+        if (pontos != null) {
+            return new ResponseEntity<>(pontos, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     } else {
-        throw new UsuarioNotFoundException("Usuário não encontrado com o ID fornecido: " + usuarioId);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
+
     @PutMapping("editar/{id}")
     public ResponseEntity<Pontos> editarPlano(@PathVariable Long id, @RequestBody Pontos novoPonto) {
         Optional<Pontos> ponto = pontosRepository.findById(id);
