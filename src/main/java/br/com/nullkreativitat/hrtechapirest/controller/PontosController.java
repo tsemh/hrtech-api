@@ -46,7 +46,8 @@ public class PontosController {
     public List<Pontos> obterPeloUsuario(@RequestParam Long idUsuario) {
         return pontosRepository.findByUsuario(usuarioRepository.findById(idUsuario).orElse(null));
     }
-@@GetMapping("/pela-data-usuario")
+
+@GetMapping("/pela-data-usuario")
 public ResponseEntity<Pontos> obterPelaDataEUsuario(@RequestParam("data") String dataStr, @RequestParam("usuarioId") Long usuarioId) {
     LocalDateTime data = LocalDateTime.parse(dataStr);
     Optional<Usuario> usuarioOptional = usuarioRepository.findById(usuarioId);
