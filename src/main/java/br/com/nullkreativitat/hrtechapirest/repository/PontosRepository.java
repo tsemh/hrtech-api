@@ -10,4 +10,6 @@ import java.util.List;
 public interface PontosRepository extends JpaRepository<Pontos, Long> {
     List<Pontos> findByData(LocalDateTime data);
     List<Pontos> findByUsuario(Usuario usuario);
+    @Query("SELECT p FROM Pontos p WHERE p.data = :data AND p.usuario = :usuario")
+    Pontos findByDataAndUsuario(@Param("data") LocalDateTime data, @Param("usuario") Usuario usuario);
 }

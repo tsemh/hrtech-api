@@ -51,10 +51,9 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarios);
     }
 
-    @GetMapping("/pelo-email")
-    public ResponseEntity<List<Usuario>> obterPeloEmail(@RequestParam String email) {
-        List<Usuario> usuarios = usuarioRepository.findByEmail(email);
-        return ResponseEntity.ok(usuarios);
+      @GetMapping("/pelo-email")
+    public Usuario obterPeloEmail(@RequestParam("email") String email) {
+        return usuarioRepository.findByEmail(email);
     }
 
     @GetMapping("/pelo-cargo")

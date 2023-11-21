@@ -45,6 +45,12 @@ public class PontosController {
     public List<Pontos> obterPeloUsuario(@RequestParam Long idUsuario) {
         return pontosRepository.findByUsuario(usuarioRepository.findById(idUsuario).orElse(null));
     }
+    @GetMapping("/pela-data-usuario")
+    public Pontos obterPelaDataEUsuario(@RequestParam("data") String dataStr, @RequestParam("usuarioId") Long usuarioId) {
+        LocalDateTime data = LocalDateTime.parse(dataStr);
+        Usuario usuario = userService.buscarPorId(usuarioId);
+        return pontosRepository.findByDataAndUsuario(data, usuario);
+    }
     @PutMapping("editar/{id}")
     public ResponseEntity<Pontos> editarPlano(@PathVariable Long id, @RequestBody Pontos novoPonto) {
         Optional<Pontos> ponto = pontosRepository.findById(id);
