@@ -48,7 +48,7 @@ public class PontosController {
     @GetMapping("/pela-data-usuario")
     public Pontos obterPelaDataEUsuario(@RequestParam("data") String dataStr, @RequestParam("usuarioId") Long usuarioId) {
         LocalDateTime data = LocalDateTime.parse(dataStr);
-        Usuario usuario = userService.buscarPorId(usuarioId);
+        Usuario usuario = usuarioRepository.findById(usuarioId);
         return pontosRepository.findByDataAndUsuario(data, usuario);
     }
     @PutMapping("editar/{id}")
