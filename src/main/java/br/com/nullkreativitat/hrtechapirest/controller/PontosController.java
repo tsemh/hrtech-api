@@ -52,7 +52,7 @@ public class PontosController {
     @GetMapping("/pela-data-usuario")
 public ResponseEntity<Pontos> obterPelaDataEUsuario(@RequestParam("data") String dataStr, @RequestParam("usuarioId") Long usuarioId) {
     try {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
         LocalDateTime data = LocalDateTime.parse(dataStr, formatter);
         
         Optional<Usuario> usuarioOptional = usuarioRepository.findById(usuarioId);
@@ -62,15 +62,15 @@ public ResponseEntity<Pontos> obterPelaDataEUsuario(@RequestParam("data") String
             Pontos pontos = pontosRepository.findByDataAndUsuario(data, usuario);
 
             if (pontos != null) {
-                return new ResponseEntity<>(pontos, HttpStatus.OK);
+                return ResponseEntity.ok(pontos);
             } else {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                return ResponseEntity.notFound().build();
             }
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.notFound().build();
         }
     } catch (DateTimeParseException e) {
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return ResponseEntity.badRequest().build();
     }
 }
 
