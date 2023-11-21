@@ -47,24 +47,31 @@ public class PontosController {
         return pontosRepository.findByUsuario(usuarioRepository.findById(idUsuario).orElse(null));
     }
 
-@GetMapping("/pela-data-usuario")
+    @GetMapping("/pela-data-usuario")
 public ResponseEntity<Pontos> obterPelaDataEUsuario(@RequestParam("data") String dataStr, @RequestParam("usuarioId") Long usuarioId) {
-    //LocalDateTime data = LocalDateTime.parse(dataStr);
-    Optional<Usuario> usuarioOptional = usuarioRepository.findById(usuarioId);
+    try {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime data = LocalDateTime.parse(dataStr, formatter);
+        
+        Optional<Usuario> usuarioOptional = usuarioRepository.findById(usuarioId);
 
-    if (usuarioOptional.isPresent()) {
-        Usuario usuario = usuarioOptional.get();
-        Pontos pontos = pontosRepository.findByDataAndUsuario(data, usuario);
+        if (usuarioOptional.isPresent()) {
+            Usuario usuario = usuarioOptional.get();
+            Pontos pontos = pontosRepository.findByDataAndUsuario(data, usuario);
 
-        if (pontos != null) {
-            return new ResponseEntity<>(pontos, HttpStatus.OK);
+            if (pontos != null) {
+                return new ResponseEntity<>(pontos, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-    } else {
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    } catch (DateTimeParseException e) {
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 }
+
 
     @PutMapping("editar/{id}")
     public ResponseEntity<Pontos> editarPlano(@PathVariable Long id, @RequestBody Pontos novoPonto) {
