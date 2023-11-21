@@ -1,6 +1,7 @@
 package br.com.nullkreativitat.hrtechapirest.controller;
 
 import br.com.nullkreativitat.hrtechapirest.entity.Pontos;
+import br.com.nullkreativitat.hrtechapirest.entity.Usuario;
 import br.com.nullkreativitat.hrtechapirest.repository.PontosRepository;
 import br.com.nullkreativitat.hrtechapirest.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
