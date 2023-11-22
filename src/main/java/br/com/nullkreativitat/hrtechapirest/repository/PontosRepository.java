@@ -13,5 +13,4 @@ public interface PontosRepository extends JpaRepository<Pontos, Long> {
     List<Pontos> findByData(LocalDateTime data);
     List<Pontos> findByUsuario(Usuario usuario);
     Optional<Pontos> findByDataAndUsuario(LocalDateTime data, Usuario usuario);
-
 }

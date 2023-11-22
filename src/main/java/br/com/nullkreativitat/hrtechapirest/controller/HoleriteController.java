@@ -48,6 +48,27 @@ public class HoleriteController {
         Optional<Usuario> usuario = usuarioRepository.findById(idUsuario);
         return usuario.map(holeriteRepository::findByUsuario).orElse(Collections.emptyList());
     }
+    @GetMapping("/pela-data-usuario")
+    public ResponseEntity<Holerite> obterPelaDataEUsuario(@RequestParam("data") String dataStr, @RequestParam("usuarioId") Long usuarioId) {
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            Date data = LocalDateTime.parse(dataStr, formatter);
+
+            Optional<Usuario> usuarioOptional = usuarioRepository.findById(usuarioId);
+
+            if (usuarioOptional.isPresent()) {
+                Usuario usuario = usuarioOptional.get();
+                Optional<Holerite> holerite = holeriteRepository.findByDataAndUsuario(data, usuario);
+
+                return holerite.map(ResponseEntity::ok)
+                             .orElse(ResponseEntity.notFound().build());
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (DateTimeParseException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
     @PutMapping("/editar/{id}")
     public ResponseEntity<Holerite> editarHolerite(@PathVariable Long id, @RequestBody Holerite updatedHolerite) {
         Optional<Holerite> existingHolerite = holeriteRepository.findById(id);

@@ -7,9 +7,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public interface HoleriteRepository extends JpaRepository<Holerite, Long> {
     List<Holerite> findByData(Date data);
     List<Holerite> findByValor(Float valor);
     List<Holerite> findByUsuario(Usuario usuario);
+    Optional<Holerite> findByDataAndUsuario(Date data, Usuario usuario);
 }
