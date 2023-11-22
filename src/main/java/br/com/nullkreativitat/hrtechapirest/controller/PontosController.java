@@ -65,7 +65,7 @@ public ResponseEntity<Pontos> obterPelaDataEUsuario(@RequestParam("data") String
     
         }
         else {
-            return System.Out.PrintLn("falhou")
+            return System.out.println("falhou");
         }
     } catch (DateTimeParseException e) {
         return ResponseEntity.badRequest().build();
