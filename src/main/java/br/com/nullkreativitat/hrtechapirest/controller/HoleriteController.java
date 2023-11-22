@@ -49,10 +49,9 @@ public class HoleriteController {
         return usuario.map(holeriteRepository::findByUsuario).orElse(Collections.emptyList());
     }
     @GetMapping("/pela-data-usuario")
-    public ResponseEntity<Holerite> obterPelaDataEUsuario(@RequestParam("data") String dataStr, @RequestParam("usuarioId") Long usuarioId) {
+       public ResponseEntity<Holerite> obterPelaDataEUsuario(@RequestParam("data") String dataStr, @RequestParam("usuarioId") Long usuarioId) {
         try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); 
-            Date data = dateFormat.parse(dataStr); 
+            Date data = new Date(dataStr);
 
             Optional<Usuario> usuarioOptional = usuarioRepository.findById(usuarioId);
 
@@ -65,7 +64,7 @@ public class HoleriteController {
             } else {
                 return ResponseEntity.notFound().build();
             }
-        } catch (ParseException | NumberFormatException e) {
+        } catch (IllegalArgumentException | NumberFormatException e) {
             return ResponseEntity.badRequest().build(); 
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); 
