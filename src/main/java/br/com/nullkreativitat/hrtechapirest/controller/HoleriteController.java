@@ -52,7 +52,7 @@ public class HoleriteController {
     @GetMapping("/pela-data-usuario")
     public ResponseEntity<Holerite> obterPelaDataEUsuario(@RequestParam("data") String dataStr, @RequestParam("usuarioId") Long usuarioId) {
         try {
-            Date data = new Date(dataStr); 
+            Date data = new Date(dataStr);
 
             Optional<Usuario> usuarioOptional = usuarioRepository.findById(usuarioId);
 
@@ -68,7 +68,7 @@ public class HoleriteController {
         } catch (NumberFormatException e) {
             return ResponseEntity.badRequest().build(); 
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().build(); 
+            return ResponseEntity.badRequest().build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); 
         }
