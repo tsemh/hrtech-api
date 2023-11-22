@@ -68,9 +68,7 @@ public ResponseEntity<Pontos> obterPelaDataEUsuario(@RequestParam("data") String
     } catch (DateTimeParseException e) {
         return ResponseEntity.badRequest().build();
     }
-    
-    return ResponseEntity.notFound().build();
-}
+    }
 
 
 
