@@ -61,9 +61,11 @@ public ResponseEntity<Pontos> obterPelaDataEUsuario(@RequestParam("data") String
             Usuario usuario = usuarioOptional.get();
             Pontos pontos = pontosRepository.findByDataAndUsuario(data, usuario);
 
-            if (pontos != null) {
-                return ResponseEntity.ok(pontos); 
-            }
+            return ResponseEntity.ok(pontos); 
+    
+        }
+        else {
+            return System.Out.PrintLn("falhou")
         }
     } catch (DateTimeParseException e) {
         return ResponseEntity.badRequest().build();
