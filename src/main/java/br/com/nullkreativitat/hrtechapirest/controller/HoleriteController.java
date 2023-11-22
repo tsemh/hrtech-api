@@ -73,7 +73,7 @@ public class HoleriteController {
     }
 
     @GetMapping("/pelo-mes-ano-usuario")
-    public ResponseEntity<Holerite> obterPeloMesAnoEUsuario(@RequestParam("ano") int ano, @RequestParam("mes") int mes,
+    public ResponseEntity<Holerite> obterPeloMesAnoEUsuario(@RequestParam("mes") int mes, @RequestParam("ano") int ano,
                                                             @RequestParam("usuarioId") Long usuarioId) {
         try {
             Calendar cal = Calendar.getInstance();
