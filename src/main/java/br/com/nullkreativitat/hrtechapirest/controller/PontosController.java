@@ -49,26 +49,27 @@ public class PontosController {
         return pontosRepository.findByUsuario(usuarioRepository.findById(idUsuario).orElse(null));
     }
 
-@GetMapping("/pela-data-usuario")
-public ResponseEntity<Pontos> obterPelaDataEUsuario(@RequestParam("data") String dataStr, @RequestParam("usuarioId") Long usuarioId) {
-    try {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
-        LocalDateTime data = LocalDateTime.parse(dataStr, formatter);
+    @GetMapping("/pela-data-usuario")
+    public ResponseEntity<Pontos> obterPelaDataEUsuario(@RequestParam("data") String dataStr, @RequestParam("usuarioId") Long usuarioId) {
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
+            LocalDateTime data = LocalDateTime.parse(dataStr, formatter);
 
-        Optional<Usuario> usuarioOptional = usuarioRepository.findById(usuarioId);
+            Optional<Usuario> usuarioOptional = usuarioRepository.findById(usuarioId);
 
-        if (usuarioOptional.isPresent()) {
-            Usuario usuario = usuarioOptional.get();
-            Pontos pontos = pontosRepository.findByDataAndUsuario(data, usuario);
+            if (usuarioOptional.isPresent()) {
+                Usuario usuario = usuarioOptional.get();
+                Optional<Pontos> pontos = pontosRepository.findByDataAndUsuario(data, usuario);
 
-            return ResponseEntity.ok(pontos); 
-        } else {
-            return ResponseEntity.notFound().build();
+                return pontos.map(ResponseEntity::ok)
+                             .orElse(ResponseEntity.notFound().build());
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (DateTimeParseException e) {
+            return ResponseEntity.badRequest().build();
         }
-    } catch (DateTimeParseException e) {
-        return ResponseEntity.badRequest().build();
     }
-}
 
     @PutMapping("editar/{id}")
     public ResponseEntity<Pontos> editarPlano(@PathVariable Long id, @RequestBody Pontos novoPonto) {
