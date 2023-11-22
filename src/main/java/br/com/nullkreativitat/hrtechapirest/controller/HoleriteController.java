@@ -51,7 +51,8 @@ public class HoleriteController {
     @GetMapping("/pela-data-usuario")
     public ResponseEntity<Holerite> obterPelaDataEUsuario(@RequestParam("data") String dataStr, @RequestParam("usuarioId") Long usuarioId) {
         try {
-            Date data = LocalDateTime.parse(dataStr, formatter);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); 
+            Date data = dateFormat.parse(dataStr); 
 
             Optional<Usuario> usuarioOptional = usuarioRepository.findById(usuarioId);
 
@@ -60,12 +61,14 @@ public class HoleriteController {
                 Optional<Holerite> holerite = holeriteRepository.findByDataAndUsuario(data, usuario);
 
                 return holerite.map(ResponseEntity::ok)
-                             .orElse(ResponseEntity.notFound().build());
+                        .orElse(ResponseEntity.notFound().build());
             } else {
                 return ResponseEntity.notFound().build();
             }
+        } catch (ParseException | NumberFormatException e) {
+            return ResponseEntity.badRequest().build(); 
         } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); 
         }
     }
     @PutMapping("/editar/{id}")
