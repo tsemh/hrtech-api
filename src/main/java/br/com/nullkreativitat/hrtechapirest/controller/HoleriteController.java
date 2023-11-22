@@ -64,7 +64,7 @@ public class HoleriteController {
             } else {
                 return ResponseEntity.notFound().build();
             }
-        } catch (DateTimeParseException e) {
+        } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
     }
