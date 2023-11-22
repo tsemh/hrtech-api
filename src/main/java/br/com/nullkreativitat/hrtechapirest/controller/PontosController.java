@@ -71,6 +71,25 @@ public class PontosController {
         }
     }
 
+@GetMapping("/pelo-dia-usuario")
+public List<Pontos> obterPontosPeloDiaEUsuario(
+        @RequestParam("data") LocalDate data,
+        @RequestParam("usuarioId") Long usuarioId) {
+
+    LocalDateTime startOfDay = data.atStartOfDay();
+    LocalDateTime endOfDay = data.atTime(LocalTime.MAX); 
+
+    Optional<Usuario> usuarioOptional = usuarioRepository.findById(usuarioId);
+
+    if (usuarioOptional.isPresent()) {
+        Usuario usuario = usuarioOptional.get();
+        return pontosRepository.findByDataBetweenAndUsuario(startOfDay, endOfDay, usuario);
+    } else {
+        return Collections.emptyList(); 
+    }
+}
+
+
     @PutMapping("editar/{id}")
     public ResponseEntity<Pontos> editarPlano(@PathVariable Long id, @RequestBody Pontos novoPonto) {
         Optional<Pontos> ponto = pontosRepository.findById(id);
