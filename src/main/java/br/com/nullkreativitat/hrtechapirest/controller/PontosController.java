@@ -65,7 +65,7 @@ public ResponseEntity<Pontos> obterPelaDataEUsuario(@RequestParam("data") String
     
         }
         else {
-            return System.out.println("falhou");
+            return ResponseEntity.badRequest().build();
         }
     } catch (DateTimeParseException e) {
         return ResponseEntity.badRequest().build();
