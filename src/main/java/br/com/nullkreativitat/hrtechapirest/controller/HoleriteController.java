@@ -51,7 +51,6 @@ public class HoleriteController {
     @GetMapping("/pela-data-usuario")
     public ResponseEntity<Holerite> obterPelaDataEUsuario(@RequestParam("data") String dataStr, @RequestParam("usuarioId") Long usuarioId) {
         try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             Date data = LocalDateTime.parse(dataStr, formatter);
 
             Optional<Usuario> usuarioOptional = usuarioRepository.findById(usuarioId);
