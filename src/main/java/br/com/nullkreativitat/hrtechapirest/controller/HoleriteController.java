@@ -7,6 +7,7 @@ import br.com.nullkreativitat.hrtechapirest.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus;
 
 import java.util.Collections;
 import java.util.Date;
@@ -49,9 +50,9 @@ public class HoleriteController {
         return usuario.map(holeriteRepository::findByUsuario).orElse(Collections.emptyList());
     }
     @GetMapping("/pela-data-usuario")
-       public ResponseEntity<Holerite> obterPelaDataEUsuario(@RequestParam("data") String dataStr, @RequestParam("usuarioId") Long usuarioId) {
+    public ResponseEntity<Holerite> obterPelaDataEUsuario(@RequestParam("data") String dataStr, @RequestParam("usuarioId") Long usuarioId) {
         try {
-            Date data = new Date(dataStr);
+            Date data = new Date(dataStr); 
 
             Optional<Usuario> usuarioOptional = usuarioRepository.findById(usuarioId);
 
@@ -64,7 +65,9 @@ public class HoleriteController {
             } else {
                 return ResponseEntity.notFound().build();
             }
-        } catch (IllegalArgumentException | NumberFormatException e) {
+        } catch (NumberFormatException e) {
+            return ResponseEntity.badRequest().build(); 
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().build(); 
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); 
