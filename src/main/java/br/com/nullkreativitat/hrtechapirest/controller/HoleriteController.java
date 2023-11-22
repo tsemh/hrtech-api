@@ -9,10 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.time.YearMonth;
+import java.util.*;
 
 @RestController
 @RequestMapping("/holerite")
@@ -71,6 +69,41 @@ public class HoleriteController {
             return ResponseEntity.badRequest().build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); 
+        }
+    }
+
+    @GetMapping("/pelo-mes-ano-usuario")
+    public ResponseEntity<Holerite> obterPeloMesAnoEUsuario(@RequestParam("ano") int ano, @RequestParam("mes") int mes,
+                                                            @RequestParam("usuarioId") Long usuarioId) {
+        try {
+            Calendar cal = Calendar.getInstance();
+            cal.set(Calendar.YEAR, ano);
+            cal.set(Calendar.MONTH, mes - 1);
+            cal.set(Calendar.DAY_OF_MONTH, 1);
+
+            Date inicioMes = cal.getTime();
+
+            cal.add(Calendar.MONTH, 1);
+            cal.add(Calendar.DAY_OF_MONTH, -1);
+
+            Date fimMes = cal.getTime();
+
+            Optional<Usuario> usuarioOptional = usuarioRepository.findById(usuarioId);
+
+            if (usuarioOptional.isPresent()) {
+                Usuario usuario = usuarioOptional.get();
+                Holerite holerite = holeriteRepository.findByDataBetweenAndUsuario(inicioMes, fimMes, usuario);
+
+                if (holerite != null) {
+                    return ResponseEntity.ok(holerite);
+                } else {
+                    return ResponseEntity.notFound().build();
+                }
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
     @PutMapping("/editar/{id}")

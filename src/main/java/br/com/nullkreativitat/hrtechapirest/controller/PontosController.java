@@ -75,9 +75,7 @@ public class PontosController {
     }
 
     @GetMapping("/pelo-dia-usuario")
-    public List<Pontos> obterPontosPeloDiaEUsuario(
-            @RequestParam("data") LocalDate data,
-            @RequestParam("usuarioId") Long usuarioId) {
+    public List<Pontos> obterPontosPeloDiaEUsuario( @RequestParam("data") LocalDate data, @RequestParam("usuarioId") Long usuarioId) {
 
         LocalDateTime startOfDay = data.atStartOfDay();
         LocalDateTime endOfDay = data.atTime(LocalTime.MAX); 
