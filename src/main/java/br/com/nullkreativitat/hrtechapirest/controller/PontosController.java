@@ -16,6 +16,7 @@ import java.time.LocalTime;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.Collections;
 
 @RestController
 @RequestMapping("/pontos")
@@ -73,24 +74,23 @@ public class PontosController {
         }
     }
 
-@GetMapping("/pelo-dia-usuario")
-public List<Pontos> obterPontosPeloDiaEUsuario(
-        @RequestParam("data") LocalDate data,
-        @RequestParam("usuarioId") Long usuarioId) {
+    @GetMapping("/pelo-dia-usuario")
+    public List<Pontos> obterPontosPeloDiaEUsuario(
+            @RequestParam("data") LocalDate data,
+            @RequestParam("usuarioId") Long usuarioId) {
 
-    LocalDateTime startOfDay = data.atStartOfDay();
-    LocalDateTime endOfDay = data.atTime(LocalTime.MAX); 
+        LocalDateTime startOfDay = data.atStartOfDay();
+        LocalDateTime endOfDay = data.atTime(LocalTime.MAX); 
 
-    Optional<Usuario> usuarioOptional = usuarioRepository.findById(usuarioId);
+        Optional<Usuario> usuarioOptional = usuarioRepository.findById(usuarioId);
 
-    if (usuarioOptional.isPresent()) {
-        Usuario usuario = usuarioOptional.get();
-        return pontosRepository.findByDataBetweenAndUsuario(startOfDay, endOfDay, usuario);
-    } else {
-        return Collections.emptyList(); 
+        if (usuarioOptional.isPresent()) {
+            Usuario usuario = usuarioOptional.get();
+            return pontosRepository.findByDataBetweenAndUsuario(startOfDay, endOfDay, usuario);
+        } else {
+            return Collections.emptyList(); 
+        }
     }
-}
-
 
     @PutMapping("editar/{id}")
     public ResponseEntity<Pontos> editarPlano(@PathVariable Long id, @RequestBody Pontos novoPonto) {
