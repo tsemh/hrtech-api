@@ -18,5 +18,5 @@ public interface PontosRepository extends JpaRepository<Pontos, Long> {
            "AND MINUTE(p.data) = MINUTE(:data) " +
            "AND SECOND(p.data) = SECOND(:data) " +
            "AND p.usuario = :usuario")
-    List<Pontos> findByDataAndUsuario(@Param("data") LocalDateTime data, @Param("usuario") Usuario usuario);
+    Pontos findByDataAndUsuario(@Param("data") LocalDateTime data, @Param("usuario") Usuario usuario);
 }
