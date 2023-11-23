@@ -96,9 +96,12 @@ public class PontosController {
 
         if (ponto.isPresent()) {
             Pontos pontoExistente = ponto.get();
-            pontoExistente.setPontp(novoPonto.getPontp());
-            pontoExistente.setData(novoPonto.getData());
-            pontoExistente.setUsuario(novoPonto.getUsuario());
+            if (novoPonto.getPontp() != null) {
+                pontoExistente.setPontp(novoPonto.getPontp());
+            }
+            if (novoPonto.getData() != null) {
+                pontoExistente.setData(novoPonto.getData());
+            }
 
             return new ResponseEntity<>(pontosRepository.save(pontoExistente), HttpStatus.OK);
         } else {
